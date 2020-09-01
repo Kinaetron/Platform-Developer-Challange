@@ -63,26 +63,17 @@ namespace Stop.API.UnitTests.Repositories
 
             public ArrangementBuilder WithHttpClientFactory()
             {
-                var httpMessageHandler = new Mock<HttpMessageHandler>();
-                var stringPayload = JsonSerializer.Serialize(payload);
-
-                httpMessageHandler.Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(stringPayload, Encoding.UTF8, "application/json"),
-                });
-
-                var client = new HttpClient(httpMessageHandler.Object)
-                {
-                    BaseAddress = new Uri("http://test.com/")
-                };
-                httpClientFactory.Setup(m => m.CreateClient(It.IsAny<string>())).Returns(client);
+                WithHttpClientFactory(HttpStatusCode.OK);
                 return this;
             }
 
             public ArrangementBuilder WithHttpClientFactoryBadRequest()
+            {
+                WithHttpClientFactory(HttpStatusCode.BadRequest);
+                return this;
+            }
+
+            private void WithHttpClientFactory(HttpStatusCode httpStatusCode)
             {
                 var httpMessageHandler = new Mock<HttpMessageHandler>();
                 var stringPayload = JsonSerializer.Serialize(payload);
@@ -91,7 +82,7 @@ namespace Stop.API.UnitTests.Repositories
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    StatusCode = httpStatusCode,
                     Content = new StringContent(stringPayload, Encoding.UTF8, "application/json"),
                 });
 
@@ -100,7 +91,6 @@ namespace Stop.API.UnitTests.Repositories
                     BaseAddress = new Uri("http://test.com/")
                 };
                 httpClientFactory.Setup(m => m.CreateClient(It.IsAny<string>())).Returns(client);
-                return this;
             }
 
             public Arrangement Build()

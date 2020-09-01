@@ -45,10 +45,17 @@ namespace Stop.API.UnitTests
 
             public ArrangementBuilder WithPlacesRepositoryWithValues()
             {
-                placesRepository.Setup(m => m.Find(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()))
-                    .ReturnsAsync(new List<Place> 
-                    { new Place() { PlaceName = "test", Geometry = new Geometry() { Location = new Coordinates() { Lat= 1, Lng = 1 } } } });
+                var places = new List<Place>
+                    { new Place() { PlaceName = "test", Geometry = new Geometry() { Location = new Coordinates() { Lat= 1, Lng = 1 } } } };
 
+                WithPlacesRepository(places);
+
+                return this;
+            }
+
+            public ArrangementBuilder WithPlacesRepositoryWithoutValues()
+            {
+                WithPlacesRepository(new List<Place>());
                 return this;
             }
 
@@ -61,12 +68,10 @@ namespace Stop.API.UnitTests
                 return this;
             }
 
-            public ArrangementBuilder WithPlacesRepositoryWithoutValues()
+            private void WithPlacesRepository(List<Place> places)
             {
                 placesRepository.Setup(m => m.Find(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()))
-                    .ReturnsAsync(new List<Place>());
-
-                return this;
+                   .ReturnsAsync(places);
             }
 
             public Arrangement Build()
