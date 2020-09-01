@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Stop.API.Controllers;
 using Stop.API.Mappers;
-using Stop.API.Models;
-using Stop.API.Repositories;
+using Stop.Model;
+using Stop.Repository;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -45,8 +45,8 @@ namespace Stop.API.UnitTests
 
             public ArrangementBuilder WithPlacesRepositoryWithValues()
             {
-                var places = new List<Place>
-                    { new Place() { PlaceName = "test", Geometry = new Geometry() { Location = new Coordinates() { Lat= 1, Lng = 1 } } } };
+                var places = new List<Point>
+                    { new Point() { PlaceName = "test", Geometry = new Geometry() { Location = new Coordinates() { Lat= 1, Lng = 1 } } } };
 
                 WithPlacesRepository(places);
 
@@ -55,20 +55,20 @@ namespace Stop.API.UnitTests
 
             public ArrangementBuilder WithPlacesRepositoryWithoutValues()
             {
-                WithPlacesRepository(new List<Place>());
+                WithPlacesRepository(new List<Point>());
                 return this;
             }
 
             public ArrangementBuilder WithCSVStopRepositoryWithValues()
             {
-                var value = new CSVStop() { StopId = "123", StopName = "Test", Latitude = 1, Longitude = 1 };
+                var value = new CSVStopViewModel() { StopId = "123", StopName = "Test", Latitude = 1, Longitude = 1 };
 
                 csvStopRepository.Setup(m => m.Get(It.IsAny<string>())).Returns(value);
-                csvStopRepository.Setup(m => m.GetAll()).Returns(new List<CSVStop>() { value });
+                csvStopRepository.Setup(m => m.GetAll()).Returns(new List<CSVStopViewModel>() { value });
                 return this;
             }
 
-            private void WithPlacesRepository(List<Place> places)
+            private void WithPlacesRepository(List<Point> places)
             {
                 placesRepository.Setup(m => m.Find(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()))
                    .ReturnsAsync(places);

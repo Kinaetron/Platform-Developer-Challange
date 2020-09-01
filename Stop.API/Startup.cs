@@ -5,11 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Stop.API.Mappers;
-using Stop.API.Models;
-using Stop.API.Importers;
 using TinyCsvParser.Mapping;
-using Stop.API.Repositories;
 using System.IO.Abstractions;
+using Stop.Model;
+using Stop.Repository;
+using Stop.Repository.Importers;
 
 namespace Stop.API
 {
@@ -28,10 +28,10 @@ namespace Stop.API
             services.AddHttpClient();
             services.AddControllers();
             services.AddScoped<IFileSystem, FileSystem>();
-            services.AddScoped<ICsvMapping<CSVStop>, CSVStopMapping>();
+            services.AddScoped<ICsvMapping<CSVStopViewModel>, CSVStopMapping>();
             services.AddScoped<IPlacesRepository, PlacesRepository>();
             services.AddScoped<ICSVStopRepository, CSVStopRepository>();
-            services.AddScoped<ICSVImporter<CSVStop>, CSVImporter<CSVStop>>();
+            services.AddScoped<ICSVImporter<CSVStopViewModel>, CSVImporter<CSVStopViewModel>>();
 
             services.AddAutoMapper(typeof(MappingProfile));
         }

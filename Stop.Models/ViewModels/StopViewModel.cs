@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Stop.API.IntegrationTests.Models
+namespace Stop.Model
 {
     public class Location
     {
@@ -10,7 +10,7 @@ namespace Stop.API.IntegrationTests.Models
         public double Longitude { get; set; }
     }
 
-    public class Stop
+    public class StopViewModel
     {
         [JsonPropertyName("stopId")]
         public string StopId { get; set; }

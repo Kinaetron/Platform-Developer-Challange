@@ -3,16 +3,16 @@ using System.Linq;
 using System.IO.Abstractions;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using Stop.API.Models;
-using Stop.API.Importers;
+using Stop.Repository.Importers;
+using Stop.Model;
 
-namespace Stop.API.Repositories
+namespace Stop.Repository
 {
     public class CSVStopRepository : ICSVStopRepository
     {
-        private readonly IEnumerable<CSVStop> stops;
+        private readonly IEnumerable<CSVStopViewModel> stops;
 
-        public CSVStopRepository(ICSVImporter<CSVStop> importer, IFileSystem fileSystem, IConfiguration configuration)
+        public CSVStopRepository(ICSVImporter<CSVStopViewModel> importer, IFileSystem fileSystem, IConfiguration configuration)
         {
             if (importer == null) {
                 throw new ArgumentNullException(nameof(importer));
@@ -30,10 +30,10 @@ namespace Stop.API.Repositories
             stops = importer.Import(configuration["CharSeperator"][0], data);
         }
 
-        public CSVStop Get(string id) =>
+        public CSVStopViewModel Get(string id) =>
            stops.FirstOrDefault(x => x.StopId == id);
 
-        public IEnumerable<CSVStop> GetAll() =>
+        public IEnumerable<CSVStopViewModel> GetAll() =>
             stops;
     }
 }

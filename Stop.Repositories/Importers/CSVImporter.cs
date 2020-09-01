@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TinyCsvParser;
 using TinyCsvParser.Mapping;
 
-namespace Stop.API.Importers
+namespace Stop.Repository.Importers
 {
     public class CSVImporter<T> : ICSVImporter<T>
     {

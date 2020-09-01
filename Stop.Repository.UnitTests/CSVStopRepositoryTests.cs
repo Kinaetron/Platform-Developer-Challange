@@ -1,13 +1,13 @@
 ﻿using Moq;
 using Xunit;
-using Stop.API.Repositories;
-using Stop.API.Importers;
-using Stop.API.Models;
 using System;
 using System.IO.Abstractions;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using Stop.Repository;
+using Stop.Model;
 using FluentAssertions;
+using Stop.Repository.Importers;
 
 namespace Stop.API.UnitTests
 {
@@ -18,9 +18,9 @@ namespace Stop.API.UnitTests
             public CSVStopRepository SUT { get; }
             public IFileSystem FileSystem { get; }
             public IConfiguration Configuration { get; }
-            public ICSVImporter<CSVStop> Importer { get; }
+            public ICSVImporter<CSVStopViewModel> Importer { get; }
 
-            public Arrangement(ICSVImporter<CSVStop> importer, IFileSystem fileSystem, IConfiguration configuration)
+            public Arrangement(ICSVImporter<CSVStopViewModel> importer, IFileSystem fileSystem, IConfiguration configuration)
             {
                 Importer = importer;
                 FileSystem = fileSystem;
@@ -33,10 +33,10 @@ namespace Stop.API.UnitTests
         {
             private readonly Mock<IFileSystem> fileSystem = new Mock<IFileSystem>();
             private readonly Mock<IConfiguration> configuration = new Mock<IConfiguration>();
-            private readonly Mock<ICSVImporter<CSVStop>> csvImporter = new Mock<ICSVImporter<CSVStop>>();
-            private readonly IEnumerable<CSVStop> stops = new List<CSVStop>()
+            private readonly Mock<ICSVImporter<CSVStopViewModel>> csvImporter = new Mock<ICSVImporter<CSVStopViewModel>>();
+            private readonly IEnumerable<CSVStopViewModel> stops = new List<CSVStopViewModel>()
             {
-                new CSVStop() { StopId = "100", StopName = "TestStop", Latitude = 1, Longitude = 1}
+                new CSVStopViewModel() { StopId = "100", StopName = "TestStop", Latitude = 1, Longitude = 1}
             };
 
             public ArrangementBuilder WithFileSystem()

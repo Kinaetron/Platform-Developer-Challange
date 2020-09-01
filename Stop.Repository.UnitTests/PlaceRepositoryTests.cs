@@ -11,26 +11,25 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Moq.Protected;
-using Stop.API.Models;
-using Stop.API.Repositories;
+using Stop.Model;
 using Xunit;
 
-namespace Stop.API.UnitTests.Repositories
+namespace Stop.Repository.UnitTests
 {
     public class PlaceRepositoryTests
     {
         private class Arrangement
         {
-            public Places Places { get; }
+            public PointsViewModel Points { get; }
             public PlacesRepository SUT { get; }
 
             public IConfiguration Configuration { get; }
 
             public IHttpClientFactory HttpClientFactory { get; }
 
-            public Arrangement(Places places, IConfiguration configuration, IHttpClientFactory httpClientFactory)
+            public Arrangement(PointsViewModel points, IConfiguration configuration, IHttpClientFactory httpClientFactory)
             {
-                Places = places;
+                Points = points;
                 Configuration = configuration;
                 HttpClientFactory = httpClientFactory;
                 SUT = new PlacesRepository(configuration, httpClientFactory);
@@ -42,11 +41,11 @@ namespace Stop.API.UnitTests.Repositories
         {
             private readonly Mock<IConfiguration> configuration = new Mock<IConfiguration>();
             private readonly Mock<IHttpClientFactory> httpClientFactory = new Mock<IHttpClientFactory>();
-            private readonly Places payload = new Places()
+            private readonly PointsViewModel payload = new PointsViewModel()
             {
-                Results = new List<Place>()
+                Results = new List<Point>()
                     {
-                        new Place()
+                        new Point()
                         {
                             PlaceName = "test",
                             Geometry = new Geometry() { Location = new Coordinates() { Lat = 1, Lng = 2 } }

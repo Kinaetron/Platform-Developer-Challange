@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Testing;
 using FluentAssertions;
 using System.Linq;
-using Stop.API.IntegrationTests.Models;
+using Stop.Model;
 
 namespace Stop.API.IntegrationTests.Controllers
 {
@@ -39,7 +39,7 @@ namespace Stop.API.IntegrationTests.Controllers
             // assert
             httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var responseObject = await JsonSerializer.DeserializeAsync<Models.Stop>(await httpResponse.Content.ReadAsStreamAsync());
+            var responseObject = await JsonSerializer.DeserializeAsync<Model.StopViewModel>(await httpResponse.Content.ReadAsStreamAsync());
             
             responseObject.StopId.Should().Be("390010582");
             responseObject.StopName.Should().Be("Garage");
@@ -68,7 +68,7 @@ namespace Stop.API.IntegrationTests.Controllers
             // assert
             httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var responseObject = await JsonSerializer.DeserializeAsync<List<Models.Stop>>(await httpResponse.Content.ReadAsStreamAsync());
+            var responseObject = await JsonSerializer.DeserializeAsync<List<Model.StopViewModel>>(await httpResponse.Content.ReadAsStreamAsync());
 
             responseObject.Should().HaveCount(3);
 
@@ -121,7 +121,7 @@ namespace Stop.API.IntegrationTests.Controllers
             // assert
             httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var responseObject = await JsonSerializer.DeserializeAsync<List<Place>>(await httpResponse.Content.ReadAsStreamAsync());
+            var responseObject = await JsonSerializer.DeserializeAsync<List<PlaceViewModel>>(await httpResponse.Content.ReadAsStreamAsync());
 
             responseObject.Should().HaveCount(1);
             responseObject[0].PlaceName.Should().Be("Four Sisters");

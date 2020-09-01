@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Stop.API.Models;
+using Stop.Model;
 
 namespace Stop.API.Mappers
 {
@@ -7,13 +7,13 @@ namespace Stop.API.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<CSVStop, StopDTO>()
+            CreateMap<CSVStopViewModel, StopDTO>()
                 .ForMember(x => x.Location, y => y
-                .MapFrom(z => new Location() { Latitude = z.Latitude, Longitude = z.Longitude }));
+                .MapFrom(z => new LocationDTO() { Latitude = z.Latitude, Longitude = z.Longitude }));
 
-            CreateMap<Place, PlaceDTO>()
+            CreateMap<Point, PlaceDTO>()
                .ForMember(x => x.Location, y => y
-               .MapFrom(z => new Location() { Latitude = z.Geometry.Location.Lat, Longitude = z.Geometry.Location.Lng }));
+               .MapFrom(z => new LocationDTO() { Latitude = z.Geometry.Location.Lat, Longitude = z.Geometry.Location.Lng }));
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Stop.API.Models
+﻿namespace Stop.Model
 {
-    public class CSVStop
+    public class CSVStopViewModel
     {
         public string StopId { get; set; }
         public string StopName { get; set; }

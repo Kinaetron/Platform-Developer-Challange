@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Stop.API.Models;
-using Stop.API.Repositories;
+using Stop.Model;
+using Stop.Repository;
 
 namespace Stop.API.Controllers
 {
@@ -29,6 +29,10 @@ namespace Stop.API.Controllers
         {
             var models = new List<StopDTO>();
 
+            // I specifically iterated over this and added mapped the models one by one 
+            // because it would be faster than using a Linq query (which would iterate over the getall results to find the correct one)
+            // then the mapper would iterate over the what was found. Instead this just iterates all of the getall results then adds it to
+            // the results list models making it faster
             foreach (var stop in stopRepository.GetAll())
             {
                 if(stop.Latitude >= minLatitude && stop.Latitude <= maxLatitude &&

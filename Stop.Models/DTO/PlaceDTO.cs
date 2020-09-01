@@ -1,8 +1,8 @@
-﻿namespace Stop.API.Models
+﻿namespace Stop.Model
 {
     public class PlaceDTO
     {
         public string PlaceName { get; set; }
-        public Location Location { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

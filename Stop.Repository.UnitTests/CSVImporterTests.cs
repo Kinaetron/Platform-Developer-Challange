@@ -3,11 +3,11 @@ using System.Text;
 using System.Linq;
 using Xunit;
 using FluentAssertions;
-using Stop.API.Models;
 using Stop.API.Mappers;
-using Stop.API.Importers;
+using Stop.Model;
+using Stop.Repository.Importers;
 
-namespace Stop.API.UnitTests
+namespace Stop.Repository.UnitTests
 {
     public class CSVImporterTests
     {
@@ -47,10 +47,10 @@ namespace Stop.API.UnitTests
                 return this;
             }
 
-            public Arrangement<CSVStop> Build()
+            public Arrangement<CSVStopViewModel> Build()
             {
-                var importer = new CSVImporter<CSVStop>(mapper);
-                return new Arrangement<CSVStop>(importer, seperatorChar, stopData);
+                var importer = new CSVImporter<CSVStopViewModel>(mapper);
+                return new Arrangement<CSVStopViewModel>(importer, seperatorChar, stopData);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Stop.API.UnitTests
         public void Ctor_WithNullCSVMapper_ShouldThrow_ArgumentNullException()
         {
             // act
-            var error = Record.Exception(() => new CSVImporter<CSVStop>(null));
+            var error = Record.Exception(() => new CSVImporter<CSVStopViewModel>(null));
 
             //assert
             error.Should().BeOfType<ArgumentNullException>();

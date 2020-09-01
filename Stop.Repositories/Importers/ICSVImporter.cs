@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Stop.API.Importers
+namespace Stop.Repository.Importers
 {
     public interface ICSVImporter<T>
     {

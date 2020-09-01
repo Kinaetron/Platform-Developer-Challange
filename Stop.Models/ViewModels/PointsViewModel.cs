@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Stop.API.Models
+namespace Stop.Model
 {
     public class Coordinates
     {
@@ -18,7 +18,7 @@ namespace Stop.API.Models
         public Coordinates Location { get; set; }
     }
 
-    public class Place
+    public class Point
     {
         [JsonPropertyName("geometry")]
         public Geometry Geometry { get; set; }
@@ -27,9 +27,9 @@ namespace Stop.API.Models
         public string PlaceName { get; set; }
     }
 
-    public class Places
+    public class PointsViewModel
     {
         [JsonPropertyName("results")]
-        public List<Place> Results { get; set; }
+        public List<Point> Results { get; set; }
     }
 }

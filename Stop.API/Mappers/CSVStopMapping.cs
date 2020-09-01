@@ -1,9 +1,9 @@
-﻿using Stop.API.Models;
+﻿using Stop.Model;
 using TinyCsvParser.Mapping;
 
 namespace Stop.API.Mappers
 {
-    public class CSVStopMapping : CsvMapping<CSVStop>
+    public class CSVStopMapping : CsvMapping<CSVStopViewModel>
     {
         public CSVStopMapping()
             :base()

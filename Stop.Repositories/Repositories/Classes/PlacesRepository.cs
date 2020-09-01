@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Stop.Model;
 using Microsoft.Extensions.Configuration;
-using Stop.API.Models;
 
-namespace Stop.API.Repositories
+namespace Stop.Repository
 {
     public class PlacesRepository : IPlacesRepository
     {
@@ -19,9 +19,9 @@ namespace Stop.API.Repositories
             this.httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
-        public async Task<IEnumerable<Place>> Find(double distance, double latitude, double longtitude)
+        public async Task<IEnumerable<Point>> Find(double distance, double latitude, double longtitude)
         {
-            var results = new List<Place>();
+            var results = new List<Point>();
 
             var connectionString = string.Format(configuration["GooglePlaces:ConnectionString"], 
                 latitude, longtitude, distance, configuration["GooglePlaces:Key"]);
@@ -32,7 +32,7 @@ namespace Stop.API.Repositories
                 var response = await client.GetAsync(connectionString);
                 if (response.IsSuccessStatusCode)
                 {
-                    var places = await JsonSerializer.DeserializeAsync<Places>(await response.Content.ReadAsStreamAsync());
+                    var places = await JsonSerializer.DeserializeAsync<PointsViewModel>(await response.Content.ReadAsStreamAsync());
                     results = places.Results;
                 }
             }

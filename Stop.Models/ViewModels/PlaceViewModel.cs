@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Stop.API.IntegrationTests.Models
+namespace Stop.Model
 {
-    public class Place
+    public class PlaceViewModel
     {
         [JsonPropertyName("placeName")]
         public string PlaceName { get; set; }
