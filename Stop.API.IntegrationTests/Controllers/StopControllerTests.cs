@@ -116,17 +116,23 @@ namespace Stop.API.IntegrationTests.Controllers
         public async Task Endpoint_GetPlaceNearby_WithPlacesNearby_ShouldReturnPlaces()
         {
             // act
-            var httpResponse = await client.GetAsync("/api/stops/390010710/nearby?distance=5");
+            var httpResponse = await client.GetAsync("/api/stops/390010710/nearby?distance=20");
 
             // assert
             httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var responseObject = await JsonSerializer.DeserializeAsync<List<PlaceViewModel>>(await httpResponse.Content.ReadAsStreamAsync());
 
-            responseObject.Should().HaveCount(1);
-            responseObject[0].PlaceName.Should().Be("Four Sisters");
-            responseObject[0].Location.Latitude.Should().Be(51.987072);
-            responseObject[0].Location.Longitude.Should().Be(1.007034);
+            responseObject.Should().HaveCount(2);
+
+
+            responseObject[0].PlaceName.Should().Be("A12");
+            responseObject[0].Location.Latitude.Should().Be(51.9869448);
+            responseObject[0].Location.Longitude.Should().Be(1.0073019);
+
+            responseObject[1].PlaceName.Should().Be("Four Sisters");
+            responseObject[1].Location.Latitude.Should().Be(51.987072);
+            responseObject[1].Location.Longitude.Should().Be(1.007034);
         }
     }
 }
