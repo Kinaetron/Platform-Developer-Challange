@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Stop.API\Stop.API.csproj" />
-    <ProjectReference Include="..\Stop.Repositories\Stop.Repository.csproj" />
+    <ProjectReference Include="..\Stop.Repository\Stop.Repository.csproj" />
   </ItemGroup>
 
 </Project>

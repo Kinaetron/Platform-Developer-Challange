@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Stop.Models\Stop.Model.csproj" />
-    <ProjectReference Include="..\Stop.Repositories\Stop.Repository.csproj" />
+    <ProjectReference Include="..\Stop.Model\Stop.Model.csproj" />
+    <ProjectReference Include="..\Stop.Repository\Stop.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
