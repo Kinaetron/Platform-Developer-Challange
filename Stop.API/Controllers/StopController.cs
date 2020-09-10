@@ -27,22 +27,12 @@ namespace Stop.API.Controllers
         public IActionResult Get(double minLatitude, double minLongitude, 
                                  double maxLatitude, double maxLongitude)
         {
-            var models = new List<StopDTO>();
+            var results = stopRepository.GetAll().Where(x => x.Latitude >= minLatitude && x.Latitude <= maxLatitude &&
+                                                             x.Longitude >= minLongitude && x.Longitude <= maxLongitude);
 
-            // I specifically iterated over this and added mapped the models one by one 
-            // because it would be faster than using a Linq query (which would iterate over the getall results to find the correct one)
-            // then the mapper would iterate over the what was found. Instead this just iterates all of the getall results then adds it to
-            // the results list models making it faster
-            foreach (var stop in stopRepository.GetAll())
-            {
-                if(stop.Latitude >= minLatitude && stop.Latitude <= maxLatitude &&
-                   stop.Longitude >= minLongitude && stop.Longitude <= maxLongitude) 
-                {
-                    models.Add(mapper.Map<StopDTO>(stop));
-                }
-            }
+            var models = mapper.Map<List<StopDTO>>(results);
 
-            if(models.Count <= 0) {
+            if (models.Count <= 0) {
                 return NotFound();
             }
 
